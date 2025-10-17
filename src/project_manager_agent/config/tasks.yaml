@@ -1,0 +1,59 @@
+# src/latest_ai_development/config/tasks.yaml
+define_scope_and_objectives:
+  description: >
+    Analyze the provided project idea: '{project_description}'.
+    Based on this, define the project's scope, identify key stakeholders,
+    and establish clear, measurable, and achievable primary objectives.
+  expected_output: >
+    A detailed markdown document with the following sections:
+    1.  **Project Scope:** A clear definition of what is included and excluded from the project.
+    2.  **Key Objectives:** A bulleted list of 3-5 main goals for the project.
+    3.  **Stakeholders:** A list of identified stakeholders and their primary interests.
+    4.  **Initial Analysis:** A brief summary of potential benefits and risks.
+  agent: project_strategist
+
+design_team_structure:
+  description: >
+    Based on the project's scope and objectives, design the ideal team structure.
+    Define the necessary teams (e.g., Frontend, Backend, DevOps, QA), the specific roles
+    within each team, and the recommended number of people for each role.
+  expected_output: >
+    A markdown document outlining the team structure. It should include:
+    - A list of required teams.
+    - For each team, a list of roles (e.g., Senior Developer, Junior Developer, UI/UX Designer).
+    - The recommended size for each team and role.
+    - A brief justification for this structure.
+  agent: team_architect
+  context:
+    - define_scope_and_objectives
+
+create_project_plan:
+  description: >
+    Create a comprehensive project plan. This includes breaking down the project into
+    phases, defining high-level tasks or epics for each phase, estimating timelines,
+    and creating a Gantt chart to visualize the schedule and dependencies.
+  expected_output: >
+    A detailed project plan in markdown format, containing:
+    1.  **Project Phases:** A breakdown of the project into logical phases (e.g., Discovery, Development Sprint 1, UAT, Deployment).
+    2.  **High-Level Tasks:** Key tasks and deliverables for each phase.
+    3.  **Estimated Timeline:** An estimated duration for each phase and the total project.
+    4.  **Gantt Chart:** A text-based or Mermaid-syntax Gantt chart showing the project schedule and task dependencies.
+  agent: project_planner
+  context:
+    - define_scope_and_objectives
+    - design_team_structure
+
+compile_final_report:
+  description: >
+    Consolidate all the information from the previous tasks (scope, objectives, team structure, and project plan)
+    into a single, cohesive, and well-structured final project plan document.
+    The final report should be ready for executive review.
+  expected_output: >
+    A complete and polished project plan document in markdown. It must integrate and synthesize the outputs
+    from the strategist, architect, and planner into a final report with a clear, logical structure.
+    The document should have a title, an executive summary, and dedicated sections for each component of the plan.
+  agent: pmo_reporter
+  context:
+    - define_scope_and_objectives
+    - design_team_structure
+    - create_project_plan
