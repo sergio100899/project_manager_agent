@@ -46,11 +46,21 @@ class ProjectManagerCrew:
         )
 
     @agent
+    def technology_architect(self) -> Agent:
+        return Agent(
+            config=self.agents_config["technology_architect"],
+            verbose=True,
+            llm=llm,
+            max_retries=3,
+        )
+
+    @agent
     def pmo_reporter(self) -> Agent:
         return Agent(
             config=self.agents_config["pmo_reporter"],
             verbose=True,
             llm=llm,
+            max_retries=3,
         )
 
     @task
@@ -69,6 +79,12 @@ class ProjectManagerCrew:
     def create_project_plan(self) -> Task:
         return Task(
             config=self.tasks_config["create_project_plan"],
+        )
+
+    @task
+    def design_technology_architecture(self) -> Task:
+        return Task(
+            config=self.tasks_config["design_technology_architecture"],
         )
 
     @task

@@ -31,14 +31,40 @@ create_project_plan:
   description: >
     Create a comprehensive project plan. This includes breaking down the project into
     phases, defining high-level tasks or epics for each phase, estimating timelines,
-    and creating a Gantt chart to visualize the schedule and dependencies.
+    and creating a markdown table to visualize the schedule and dependencies.
   expected_output: >
     A detailed project plan in markdown format, containing:
     1.  **Project Phases:** A breakdown of the project into logical phases (e.g., Discovery, Development Sprint 1, UAT, Deployment).
     2.  **High-Level Tasks:** Key tasks and deliverables for each phase.
     3.  **Estimated Timeline:** An estimated duration for each phase and the total project.
-    4.  **Gantt Chart:** A text-based or Mermaid-syntax Gantt chart showing the project schedule and task dependencies.
+    4.  **Gantt Chart:** A table-based Gantt chart showing the project schedule and task dependencies.
   agent: project_planner
+  context:
+    - define_scope_and_objectives
+    - design_team_structure
+
+design_technology_architecture:
+  description: >
+    Using the defined project scope and team structure, design a coherent,
+    validated, and secure technology architecture for the project. The architecture
+    must clearly describe the technology stack, main components, data flow,
+    and security/scalability considerations.
+  expected_output: >
+    Produce a well-structured **Markdown document** (`technology_architecture.md`) that includes:
+    1. **Technology Stack:**  
+       A concise list of programming languages, frameworks, databases, APIs, and tools to be used, with rationale for key choices.
+    2. **Architectural Pattern:**  
+       A short explanation of the architectural style (e.g., microservices, layered, monolithic) and why it fits the project’s needs.
+    3. **Component Breakdown:**  
+       A list and description of all major components or subsystems, including their main responsibilities and data flow.
+    4. **Architecture Diagram:**  
+       A system-level **Mermaid diagram** illustrating the relationships and data flow between components.  
+       *All diagrams must be generated using the internal tool `Mermaid Diagram Generator` (not manually written).*
+    5. **Integration and Dependencies:**  
+       Describe how components interact with external systems (e.g., authentication, APIs, data pipelines).
+    6. **Security and Scalability Considerations:**  
+       Outline key security layers, data protection, and scalability strategies relevant to the chosen architecture.
+  agent: technology_architect
   context:
     - define_scope_and_objectives
     - design_team_structure
