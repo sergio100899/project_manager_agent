@@ -8,7 +8,7 @@ from crewai import LLM
 
 
 llm = LLM(
-    model="gemini/gemini-2.0-flash",
+    model="gemini/gemini-2.5-flash",
     temperature=0.7,
 )
 
@@ -60,6 +60,7 @@ class ProjectManagerCrew:
             config=self.agents_config["pmo_reporter"],
             verbose=True,
             llm=llm,
+            reasoning=True,
             max_retries=3,
         )
 
@@ -90,7 +91,7 @@ class ProjectManagerCrew:
     @task
     def compile_final_report(self) -> Task:
         return Task(
-            config=self.tasks_config["compile_final_report"],
+            config=self.tasks_config["compile_final_report"]
         )
 
     @crew
