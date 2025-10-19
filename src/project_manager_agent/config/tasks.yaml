@@ -1,9 +1,9 @@
-# src/latest_ai_development/config/tasks.yaml
 define_scope_and_objectives:
   description: >
     Analyze the provided project idea: '{project_description}'.
     Based on this, define the project's scope, identify key stakeholders,
     and establish clear, measurable, and achievable primary objectives.
+    Remember that today is {today}.
   expected_output: >
     A detailed markdown document with the following sections:
     1.  **Project Scope:** A clear definition of what is included and excluded from the project.
@@ -55,15 +55,15 @@ design_technology_architecture:
   expected_output: >
     Produce a well-structured **Markdown document** (`technology_architecture.md`) that includes:
     1. **Technology Stack:**  
-       A concise list of programming languages, frameworks, databases, APIs, and tools to be used, with rationale for key choices.
+      A concise list of programming languages, frameworks, databases, APIs, and tools to be used, with rationale for key choices.
     2. **Architectural Pattern:**  
-       A short explanation of the architectural style (e.g., microservices, layered, monolithic) and why it fits the project’s needs.
+      A short explanation of the architectural style (e.g., microservices, layered, monolithic) and why it fits the project’s needs.
     3. **Component Breakdown:**  
-       A list and description of all major components or subsystems, including their main responsibilities and data flow.
+      A list and description of all major components or subsystems, including their main responsibilities and data flow.
     4. **Integration and Dependencies:**  
-       Describe how components interact with external systems (e.g., authentication, APIs, data pipelines).
+      Describe how components interact with external systems (e.g., authentication, APIs, data pipelines).
     5. **Security and Scalability Considerations:**  
-       Outline key security layers, data protection, and scalability strategies relevant to the chosen architecture.
+      Outline key security layers, data protection, and scalability strategies relevant to the chosen architecture.
     6. Formatted as markdown without '```'
   agent: technology_architect
   context:
@@ -71,6 +71,54 @@ design_technology_architecture:
     - design_team_structure
   markdown: true
   output_file: output/architecture.md
+
+generate_architecture_html:
+  description: >
+    Generate a clean software architecture diagram in pure HTML (not Markdown, not Mermaid),
+    fully self-contained and wrapped explicitly between <html>...</html> tags.
+    The HTML must be render-ready in Streamlit via st.components.html, with inline structure only.
+    The HTML must be passed adter to the tool html_cleaner.
+  expected_output: >
+    One <html>...</html> block — a full detailed architecture diagram with a clear title — ready to render with no extra wrapping.
+    Full described architecture diagrama reflecting the technologies and the communication between them.
+  agent: visual_diagram_designer
+  context:
+    - design_technology_architecture
+  markdown: false
+  output_file: output/architecture.html
+  validation_instructions: >
+    Before finalizing, the agent must verify:
+      - Output contains ONLY one full <html>...</html> block.
+      - Diagram must have a clear title.
+      - No markdown, no backticks, no comments.
+      - HTML must be with dark background and white font.
+      - No external dependencies (no JS, no CSS links).
+      - No reasoning texts.
+      - STRICT: Output must start with <html> and end with </html>.
+
+generate_gantt_html:
+  description: >
+    Generate a clean Gantt-style project plan timeline in pure HTML (not Markdown, not Mermaid),
+    fully self-contained and wrapped explicitly between <html>...</html> tags.
+    The HTML must be render-ready in Streamlit via st.components.html, with inline structure only.
+    The HTML must be passed adter to the tool html_cleaner.
+  expected_output: >
+    One <html>...</html> block — a full detailed Gantt diagram with a clear title — ready to render with no extra wrapping.
+  agent: visual_diagram_designer
+  context:
+    - create_project_plan
+  markdown: false
+  output_file: output/gantt.html
+  validation_instructions: >
+    Before finalizing, the agent must verify:
+      - Output contains ONLY one full <html>...</html> block.
+      - Diagram must have a clear title.
+      - No markdown, no backticks, no comments.
+      - HTML must be with dark background and white font.
+      - No external dependencies (no JS, no CSS links).
+      - No reasoning texts.
+      - STRICT: Output must start with <html> and end with </html>.
+
 
 compile_final_report:
   description: >
@@ -87,5 +135,6 @@ compile_final_report:
     - define_scope_and_objectives
     - design_team_structure
     - create_project_plan
+    - design_technology_architecture
   markdown: true
   output_file: output/report.md
