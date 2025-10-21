@@ -93,7 +93,13 @@ uv sync
 Create a `.env` file in the root directory of the project and add your Google API key.
 
 ```
-GOOGLE_API_KEY=<YOUR_API_KEY>
+GEMINI_API_KEY=<YOUR_API_KEY>
+```
+
+or directly export on your terminal.
+
+```
+export GEMINI_API_KEY=<YOUR_API_KEY>
 ```
 
 ### 5. Run the Application
